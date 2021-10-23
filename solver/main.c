@@ -1,21 +1,53 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "sudoku_solver.h"
 
-int main(int argc, char *argv[]){
-	FILE* fichier = NULL;
+char m[81];
 
-	fichier = fopen("grid.txt", "r+");
-	char chaine[TAILLE_MAX] = "";
-
-	if(fichier!=NULL){
-		//On peut lire et écrire dans le fichier
-		fgets(str, TAILLE_MAX, fichier); //On lit les caractères du fichier que l'on stock dans chaine
-		printf("%s",chaine); //On affiche la chaine
+void read_text(){
+	char ch;
+	char grid[83];
+	FILE *f;
+	f = fopen("grid.txt","r");
+	if(f==NULL){
+		printf("Erreur lors de l'ouverture d'un fichier");
+		exit(1);
 	}
-	else{
-		//On affiche un message d'erreur si on veut
-		printf("Impossible d'ouvrir le fichier test.txt");
+	
+	int i = 0;
+	while((ch=fgetc(f))!=EOF){
+		if((int)ch>=48 && (int)ch<=57){
+			grid[i] = ch;
+            printf("%c \n",grid[i]);
+			i+=1;
+		}
 	}
-
-	return 0;
+	fclose(f);
+    int k = 0;
+	for(size_t i = 0; i<9 ; i++){
+		for(size_t j = 0; j<9 ; j++){
+			m[i*9+j] = grid[k];
+            printf("%c \n",m[i*9+j]);
+			k+=1;
+		}
+	}
 }
+
+
+
+void print_matrix(){
+	for(size_t i = 0 ; i<9 ; i++){
+        for(size_t j = 0 ; j<9 ; j++){
+           printf("%c",m[i*9+j]); 
+        }
+        printf("\n");
+    }
+}
+
+
+int main(){
+	read_text();
+    print_matrix();
+}
+
+
